@@ -1,0 +1,53 @@
+                     WEATHER DATA ENGINEERING PIPELINE
+                   -------------------------------------
+
+                    +-------------------------------+
+                    |        OpenWeather API        |
+                    |   External Weather Service    |
+                    +---------------+---------------+
+                                    |
+                                    | REST API Request
+                                    |
+                    +---------------v---------------+
+                    |        Azure Data Factory     |
+                    |                               |
+                    |  Pipeline Components:         |
+                    |  - ForEach Activity           |
+                    |  - Copy Activity              |
+                    |  - REST API Source            |
+                    +---------------+---------------+
+                                    |
+                                    | Raw JSON Data
+                                    |
+                    +---------------v---------------+
+                    |   Azure Data Lake Storage     |
+                    |         (ADLS Gen2)           |
+                    |                               |
+                    |        BRONZE LAYER           |
+                    |  Raw API Response (JSON)      |
+                    |                               |
+                    |+---------------+---------------+
+                                    |
+                                    | Read Raw JSON
+                                    |
+                    +---------------v---------------+
+                    |        Azure Databricks       |
+                    |        Apache Spark           |
+                    |                               |
+                    |   Data Processing Tasks:      |
+                    |   - Read JSON files           |
+                    |   - Flatten nested schema     |
+                    |   - Clean data                |
+                    +---------------+---------------+
+                                    |
+                                    | Processed Data
+                                    |
+                    +---------------v---------------+
+                    |          SILVER LAYER         |
+                    |        Delta Lake Table       |
+                    |                               |
+                    |   Structured Dataset:         |
+                    |   city | temperature |        |
+                    |        humidity | weather     |
+                    +-------------------------------+
+
